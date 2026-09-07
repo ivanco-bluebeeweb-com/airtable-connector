@@ -9,7 +9,7 @@ class NoParams(BaseModel):
 
 class ConnectParams(BaseModel):
     label: str = Field(default="", description="Friendly connection label, e.g. Primary Airtable.")
-    api_token: str = Field(description="Platform API Key / Access Token")
+    api_token: str = Field(description="Airtable Personal Access Token (pat...).")
     base_url: str = Field(default="https://api.airtable.com/v0", description="Airtable API base URL.")
 
 class ConnectionIdParams(BaseModel):
@@ -47,7 +47,7 @@ class ListAppRecordParams(BaseModel):
 
 class GetAppRecordParams(BaseModel):
     connection_id: str = Field(default="", description="Optional connection ID.")
-    apprecord_id: str = Field(description="Airtable AppRecord ID.")
+    apprecord_id: str = Field(description="Airtable App/Base ID.")
 
 class AuditHealthReport(BaseModel):
     healthy: bool
