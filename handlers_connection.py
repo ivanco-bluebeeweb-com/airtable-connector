@@ -64,8 +64,15 @@ async def connect_airtable_connector(ctx, params: ConnectParams) -> ActionResult
         "base_url": params.base_url,
         "is_active": True
     }
-    await ctx.store.create(_COLLECTION, rec, id=cid)
-    return ActionResult.success(rec, summary=f"Connected Airtable ({rec['label']}).")
+    await ctx.store.create(_COLLECTION, rec)
+    safe_rec = {
+        "id": cid,
+        "label": rec["label"],
+        "masked_key": rec["masked_key"],
+        "base_url": rec["base_url"],
+        "is_active": True
+    }
+    return ActionResult.success(ConnectionRecord(**safe_rec), summary=f"Connected Airtable ({rec['label']}).")
 
 @chat.function("list_connections", "List configured Airtable connections.", action_type="read", chain_callable=True, event="airtable-connector.list_connections", effects=["read:connections"], data_model=ConnectionList)
 async def list_connections(ctx, params: NoParams) -> ActionResult:
